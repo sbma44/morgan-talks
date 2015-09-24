@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="highlight.css">
+<script src="highlight.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+<body><pre><code class="javascript">
+var TileReduce = new require('tile-reduce');
+var sprintf = require('sprintf');
+
+var opts = {
+  map: __dirname + '/fruit.js',
+  tileLayers: [
+    {
+      name: 'osmdata',
+      mbtiles: '/Users/tomlee/latest.planet.mbtiles',
+      layers: ['osm']
+    }
+  ],
+  zoom: 15
+};
+
+var bbox = {
+  SF: [-122.66, 37.61, -122.15, 38],
+  DC: [ -77.19, 38.79, -76.9, 39 ],
+  Atlanta: [ -84.52, 33.61, -84.23, 33.93 ]
+};
+
+var tilereduce = TileReduce(bbox.Atlanta, opts);
+
+// called after every calculation
+var totals = {};
+tilereduce.on('reduce', function(result) {
+  for ( var fruit in result ) {
+    if (totals[fruit] === undefined) totals[fruit] = { count: 0, km: 0 };
+    totals[fruit].km += result[fruit].km;
+    totals[fruit].count += result[fruit].count;
+  }
+});
+
+// called when processing is complete 😅
+tilereduce.on('end', function() {
+  var fruitLookup = {
+      apple: '🍎', banana: '🍌', cherry: '🍒', grape: '🍇',
+      lemon: '🍋', orange: '🍊', peach: '🍑', pear: '🍐', total: 'total'
+    };
+  for ( var fruit in totals ) {
+    console.log(sprintf('%10s %6d ways, %6.1f km, %6.1f%%', fruitLookup[fruit], totals[fruit].count, totals[fruit].km, (100.0 * totals[fruit].km / totals['total'].km)));
+  }
+});
+
+tilereduce.run();
+</code></pre>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="highlight.css">
+<script src="highlight.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+<body><pre><code class="javascript">
+var turf = require('turf');
+
+module.exports = function (tileLayers, opts, callback) {
+
+  // initialize per-fruit count-keeping & regex variables
+  var fruitCount = {}, regex = {};
+  ['apple', 'banana', 'cherry', 'grape', 'lemon', 'orange', 'peach', 'pear', 'total']
+    .forEach(function(fruit) {
+      fruitCount[fruit] = { km: 0, count: 0};
+      regex[fruit] = new RegExp('(^|\\s)' + fruit + '.*', 'i');
+    });
+  var totalRoads = 0, totalRoadLength = 0;
+
+  // loop through features in this tile layer
+  for( var i=0; i < tileLayers.osmdata.osm.features.length; i++ ) {
+    var feature = tileLayers.osmdata.osm.features[i];
+
+    // ensure feature is a highway with a name & appropriate geometry
+    if (feature.properties.highway && feature.properties.name &&
+      (feature.geometry.type === 'LineString')) {
+
+      // calculate length of feature
+      var roadLength = turf.lineDistance(feature, 'kilometers');
+
+      // add to totals
+      fruitCount.total.count += 1;
+      fruitCount.total.km += roadLength;
+
+      // test names, update counts
+      for( var fruit in fruitCount ) {
+        if (fruit === 'total') continue;
+        if(regex[fruit].test(feature.properties.name)) {
+          fruitCount[fruit].km += roadLength;
+          fruitCount[fruit].count += 1;
+          break;
+        }
+      }
+    }
+  }
+
+  callback(null, fruitCount);
+}
+</code></pre>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

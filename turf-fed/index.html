@@ -80,7 +80,7 @@ window.onload = function() {
     function fwd() { go(Math.min(s.length - 1, ++big.current)); }
     function rev() { go(Math.max(0, --big.current)); }
     document.onkeydown = function(e) {
-        if (e.which === 39 || e.which === 34 || e.which === 40) fwd();
+        if (e.which === 39 || e.which === 34 || e.which === 40 || e.which === 13) fwd();
         if (e.which === 37 || e.which === 33 || e.which === 38) rev();
     };
     document.ontouchstart = function(e) {
@@ -102,40 +102,35 @@ window.onload = function() {
     };
     go(big.current);
 };
-</script></head>
+</script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
 <body>
 
-<div><em>@tjl</em> <br><br>tlee@mapbox.com</div>
+<div><em>Tom Lee</em><br>tlee@mapbox.com<br>@tjl</div>
 
-<div><em>Turf</em></div>
+<div><em>Turf</em> &amp;<br/><em>tile-reduce</em></div>
 
 <div>http://<em>turf</em>js.org/</div>
 
-<div>Turf is <em>GIS for the Web</em></div>
-
 <div>Turf manipulates map data</div>
 
+<div>GeoJSON</div>
+
 <div>
-  and the results can be displayed anywhere
+  results can be displayed anywhere
   <ul>
     <li>mapbox.js</li>
     <li>leaflet</li>
     <li>d3</li>
     <li>mapbox studio</li>
+    <li>QGIS</li>
     <li>ArcGIS Desktop</li>
-    <li>qgis</li>
     <li>etc</li>
   </ul>
 </div>
 
-<div>
-  <h1>flexible</h1>
-  <ul>
-    <li>open</li>
-    <li>modular</li>
-    <li>runs everywhere</li>
-  </ul>
-</div>
+<div>Javascript runs everywhere</div>
 
 <div>
   <h1>everywhere?</h1>
@@ -149,21 +144,50 @@ window.onload = function() {
 
 <div>these <em>slides</em></div>
 
-<!-- <div><iframe src='https://www.mapbox.com/bites/00090/?embed=true' width='1000px' height='475px' frameborder="0"></iframe></div> -->
-
-<div>what can it do?</div>
-
-<div><ul>
-  <li>buffers</li>
-  <li>meshing</li>
-  <li>smoothing</li>
-  <li>aggregation</li>
-  <li>contouring</li>
-</ul></div>
-
-<div><em>lots</em> of other stuff</div>
+<div><iframe src='https://www.mapbox.com/bites/00090/?embed=true' width='1000px' height='475px' frameborder="0"></iframe></div>
 
 <div>
+  <h1>flexible</h1>
+  <ul>
+    <li>open</li>
+    <li>modular</li>
+    <li>runs everywhere</li>
+  </ul>
+</div>
+
+<div><em>what can it do?</em></div>
+
+<div>buffers</div>
+
+<div>
+  turf.buffer(point, 1, 'mile')
+</div>
+
+<div><iframe src='https://www.mapbox.com/bites/00082/?embed=true' width='1000px' height='475px' frameborder="0"></iframe></div>
+
+<div>smoothing</div>
+
+<div>
+  bezier(line, 5000, .85)
+</div>
+
+<div><span><img src="https://dl.dropbox.com/s/3osdd72remw337t/Screenshot%202015-01-12%2013.19.53.png?dl=0"/></span></div>
+
+<div>contours</div>
+
+<div>
+  isolines(points, z, resolution, breaks)
+</div>
+
+<div><iframe src='https://www.mapbox.com/bites/00083/?embed=true' width='1000px' height='475px' frameborder="0"></iframe></div>
+
+<div>aggregation</div>
+
+<div><iframe src='https://www.mapbox.com/bites/00081/?embed=true' width='1000px' height='475px' frameborder="0"></iframe></div>
+
+<div>lots of other stuff</div>
+
+<div><span>
 turf-isobands
 turf-average
 turf-bboxPolygon
@@ -218,33 +242,22 @@ turf-tag
 turf-tin
 turf-union
 turf-variance
-turf-within
-turf-line-distance
-turf-line-slice
-turf-along
-turf-meta
-turf-point-on-line</div>
+turf-within</span></div>
 
-<div>turf is <em>fast</em></div>
+<div>Turf is <em>GIS</em> for <em>the Web</em></div>
 
-<div>realtime <em>walkability analysis</em></div>
-
-<!-- <div><iframe src='https://www.mapbox.com/bites/00084/?embed=true' width='1000px' height='475px' frameborder="0"></iframe></div> -->
-
-<div>GeoJSON<br/><span style="color:red;">♥‿♥</span></div>
-
-<div>modern Javascript</div>
-
-<!-- <div><iframe src='https://www.mapbox.com/bites/00086/?embed=true' width='1000px' height='475px' frameborder="0"></iframe></div> -->
+<div>Turf is <em>GIS</em> for <em>everything</em></div>
 
 <div>automate processing so you can spend your time thinking not clicking</div>
 
-<div><span><img src="slide1.png"></span></div>
-<div><span><img src="slide2.png"></span></div>
-<div><span><img src="slide3.png"></span></div>
-<div><span><img src="slide4.png"></span></div>
+<div><strike>browser limits</strike></div>
 
-<div>let's get <em>crazy</em></div>
+<div style="background-color: black"><span><img src="slide1.png"></span></div>
+<div style="background-color: black"><span><img src="slide2.png"></span></div>
+<div style="background-color: black"><span><img src="slide3.png"></span></div>
+<div style="background-color: black"><span><img src="slide4.png"></span></div>
+
+<div><strike>computing limits</strike></div>
 
 <div><em>tile-reduce</em></div>
 
@@ -256,9 +269,19 @@ turf-point-on-line</div>
 
 <div><iframe src="tr-index.html" width='1000px' height='650px' frameborder="0"></iframe></div>
 
-<div>live demo</div>
-
 <div>☁</div>
+
+<div style="background-color: white"><span><img src="processors.png"></span></div>
+
+<div style="background-color: black"><span><img src="sf.png"/></span></div>
+
+<div style="background-color: black"><span><img src="runkeeper_raw.jpg"/></span></div>
+
+<div style="background-color: black"><span><img src="runkeeper_processed.jpg"/></span></div>
+
+<div style="background-color: black"><span><img src="runkeeper_track.jpg"/></span></div>
+
+<div style="background-color: black"><span><img src="runkeeper_coast.jpg"/></span></div>
 
 <div>free &amp; open source</div>
 
@@ -281,6 +304,6 @@ djdmbrwsk
 zdavkeos
 </div>
 
-<div>@tjl<hr>tlee@mapbox.com</div>
+<div><em>Tom Lee</em><br>tlee@mapbox.com<br>@tjl</div>
 
 </body></html>
